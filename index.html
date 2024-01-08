@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Notas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .titulo {
+      font-weight: bold;
+      font-size: 30px;
+    }
+
+    .linha {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    /* Estilo dos blocos de notas */
+    .bloco-notas {
+      width: 300px;
+      height: 20px; /* Tamanho inicial dos blocos de notas */
+      resize: both;
+      overflow: auto;
+    }
+
+    /* Estilo do bloco de notas "Anotações" */
+    #blocoAnotacoes {
+      width: 300px;
+      height: 30px;
+      resize: both;
+      overflow: auto;
+    }
+
+    /* Ajuste na posição do botão Limpar */
+    #limparBtn {
+      margin-left: 100px;
+    }
+
+    /* Estilo da caixa de resultado de impressão */
+    #resultado {
+      width: 400px; /* Alteração no tamanho da caixa de resultado de impressão */
+      height: 50px;
+      resize: both;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <p class="titulo">Gerador de Notas</p>
+    
+    <!-- Checkbox para remover emojis -->
+    <br>
+    <input type="checkbox" id="removerEmojis"> Remover emojis? <br>
+
+    <!-- Linhas com blocos de notas -->
+    <div class="linha">
+      <span id="emoji1">⚠️</span> Motivo/Solicitação:
+      <textarea id="motivo" class="bloco-notas"></textarea>
+    </div>
+
+    <div class="linha">
+      <span id="emoji2">📞</span> Telefone do Cliente:
+      <textarea id="telefoneCliente" class="bloco-notas"></textarea>
+    </div>
+
+    <div class="linha">
+      <span id="emoji3">📝</span> Etapas e resolução de problemas:
+      <textarea id="etapasResolucao" class="bloco-notas"></textarea>
+    </div>
+
+    <div class="linha">
+      <span id="emoji4">✔️</span> Solução final e/ou próximas etapas:
+      <textarea id="solucaoProximasEtapas" class="bloco-notas"></textarea>
+    </div>
+
+    <div class="linha">
+      <span id="emoji5">📋</span> Tabulação:
+      <textarea id="tabulacao" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelTabulacao"> Não aplicável
+    </div>
+
+    <div class="linha">
+      <span id="emoji6">🏷️</span> Tag:
+      <textarea id="tag" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelTag"> Não aplicável
+    </div>
+
+    <div class="linha">
+      <span id="emoji7">🔎</span> Feedback do cliente:
+      <textarea id="feedbackCliente" class="bloco-notas"></textarea>
+    </div>
+
+    <div class="linha">
+      <span id="emoji8">👀</span> Observação:
+      <textarea id="observacao" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelObservacao"> Não aplicável
+    </div>
+
+    <div class="linha">
+      <span id="emoji9">📌</span> Status:
+      <select id="status">
+        <option value="Call back">Call back</option>
+        <option value="Customer didn't respond">Customer didn't respond</option>
+        <option value="Customer disconnected">Customer disconnected</option>
+        <option value="Customer to provide more info">Customer to provide more info</option>
+        <option value="Customer updated">Customer updated</option>
+        <option value="Duplicate ticket">Duplicate ticket</option>
+        <option value="Holding for ticket review">Holding for ticket review</option>
+        <option value="New">New</option>
+        <option value="No resolution found">No resolution found</option>
+        <option value="Redirected to partner">Redirected to partner</option>
+        <option value="Resolved">Resolved</option>
+        <option value="Social bulk close">Social bulk close</option>
+        <option value="Spam">Spam</option>
+        <option value="Unresolved">Unresolved</option>
+      </select>
+    </div>
+
+    <!-- Botão para gerar texto -->
+    <button onclick="gerarTexto()">Gerar Texto</button>
+
+    <!-- Caixa de texto para exibir o resultado -->
+    <textarea id="resultado" rows="10" cols="50"></textarea>
+
+    <!-- Botão para copiar o texto gerado -->
+    <button onclick="copiarTexto()">Copiar</button>
+
+    <!-- Botão para limpar o formulário -->
+    <button id="limparBtn" onclick="limparFormulario()">Limpar</button> <!-- Ajuste na posição do botão Limpar -->
+  </div>
+
+  <!-- Bloco de notas "Anotações" -->
+  <div class="linha">
+    <span id="emojiAnotacoes">📑</span> Anotações:
+    <textarea id="blocoAnotacoes" class="bloco-notas"></textarea>
+    <!-- Botão para apagar anotação -->
+    <button onclick="apagarAnotacao()">Apagar Anotação</button>
+  </div>
+
+  <script>
+    function gerarTexto() {
+      try {
+        var textoFinal = "";
+
+        var removerEmojis = document.getElementById('removerEmojis').checked;
+
+        // Função auxiliar para adicionar emojis, dependendo da opção "Remover emojis?"
+        function adicionarEmoji(emoji) {
+          return removerEmojis ? "" : emoji;
+        }
+
+        textoFinal += adicionarEmoji("⚠️") + " Motivo/Solicitação: " + document.getElementById('motivo').value + "\n\n";
+        textoFinal += adicionarEmoji("📞") + " Telefone do Cliente: " + document.getElementById('telefoneCliente').value + "\n\n";
+        textoFinal += adicionarEmoji("📝") + " Etapas e resolução de problemas: " + document.getElementById('etapasResolucao').value + "\n\n";
+        textoFinal += adicionarEmoji("✔️") + " Solução final e/ou próximas etapas: " + document.getElementById('solucaoProximasEtapas').value + "\n\n";
+
+        var naoAplicavelTabulacao = document.getElementById('naoAplicavelTabulacao').checked;
+        if (!naoAplicavelTabulacao) {
+          textoFinal += adicionarEmoji("📋") + " Tabulação: " + document.getElementById('tabulacao').value + "\n\n";
+        }
+
+        var naoAplicavelTag = document.getElementById('naoAplicavelTag').checked;
+        if (!naoAplicavelTag) {
+          textoFinal += adicionarEmoji("🏷️") + " Tag: " + document.getElementById('tag').value + "\n\n";
+        }
+
+        textoFinal += adicionarEmoji("🔎") + " Feedback do cliente: " + document.getElementById('feedbackCliente').value + "\n\n";
+
+        // Oitava linha
+        var naoAplicavelObservacao = document.getElementById('naoAplicavelObservacao').checked;
+        if (!naoAplicavelObservacao) {
+          textoFinal += adicionarEmoji("👀") + " Observação: " + document.getElementById('observacao').value + "\n\n";
+        }
+
+        // Nona linha
+        var statusSelecionado = document.getElementById('status').value;
+        var statusFormatado = formatarStatus(statusSelecionado);
+        textoFinal += adicionarEmoji("📌") + " Status: " + statusFormatado;
+
+        document.getElementById('resultado').value = textoFinal;
+      } catch (error) {
+        console.error("Erro ao gerar texto:", error.message);
+      }
+    }
+
+    function copiarTexto() {
+      var resultado = document.getElementById('resultado');
+      resultado.select();
+      document.execCommand('copy');
+      alert('Texto copiado para a área de transferência!');
+    }
+
+    function limparFormulario() {
+      // Lógica para limpar o formulário
+      document.getElementById('removerEmojis').checked = false;
+      document.getElementById('motivo').value = "";
+      document.getElementById('telefoneCliente').value = "";
+      document.getElementById('etapasResolucao').value = "";
+      document.getElementById('solucaoProximasEtapas').value = "";
+      document.getElementById('tabulacao').value = "";
+      document.getElementById('naoAplicavelTabulacao').checked = false;
+      document.getElementById('tag').value = "";
+      document.getElementById('naoAplicavelTag').checked = false;
+      document.getElementById('feedbackCliente').value = "";
+      document.getElementById('observacao').value = "";
+      document.getElementById('naoAplicavelObservacao').checked = false; // Correção na oitava linha
+      // ... limpar outras caixas de texto ...
+
+      // Limpa o resultado
+      document.getElementById('resultado').value = "";
+    }
+
+    function apagarAnotacao() {
+      document.getElementById('blocoAnotacoes').value = "";
+    }
+
+    function formatarStatus(status) {
+      // Lógica para formatar o status conforme especificado
+      // Adapte conforme necessário para outros status
+      if (status === "Call back") {
+        return "Call back";
+      } else if (status === "Customer didn't respond") {
+        return "Customer didn't respond";
+      } else if (status === "Customer disconnected") {
+        return "Customer disconnected";
+      } else if (status === "Customer to provide more info") {
+        return "Customer to provide more info";
+      } else if (status === "Customer updated") {
+        return "Customer updated";
+      } else if (status === "Duplicate ticket") {
+        return "Duplicate ticket";
+      } else if (status === "Holding for ticket review") {
+        return "Holding for ticket review";
+      } else if (status === "New") {
+        return "New";
+      } else if (status === "No resolution found") {
+        return "No resolution found";
+      } else if (status === "Redirected to partner") {
+        return "Redirected to partner";
+      } else if (status === "Resolved") {
+        return "Resolved";
+      } else if (status === "Social bulk close") {
+        return "Social bulk close";
+      } else if (status === "Spam") {
+        return "Spam";
+      } else if (status === "Unresolved") {
+        return "Unresolved";
+      } else {
+        return ""; // Retorne vazio ou ajuste conforme necessário para outros status
+      }
+    }
+  </script>
+</body>
+</html>
