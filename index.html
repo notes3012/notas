@@ -43,7 +43,7 @@
     /* Estilo da caixa de resultado de impressão */
     #resultado {
       width: 400px; /* Alteração no tamanho da caixa de resultado de impressão */
-      height: 50px;
+      height: 140px; /* Aumento da altura da caixa de resultado de impressão */
       resize: both;
       overflow: auto;
     }
@@ -51,7 +51,7 @@
 </head>
 <body>
   <div>
-    <p class="titulo">Gerador de Notas 1.0</p>
+    <p class="titulo">Gerador de Notas 2.0</p>
     
     <!-- Checkbox para remover emojis -->
     <br>
@@ -63,13 +63,47 @@
       <textarea id="motivo" class="bloco-notas"></textarea>
     </div>
 
-    <div class="linha">
-      <span id="emoji2">📞</span> Telefone do Cliente:
+    <!-- Linha adicionada -->
+    <div class="linhaDados">
+      <span id="emoji2">🔐</span> Dados de Verificação de Conta:
+      <textarea id="dadosVerificacao" class="bloco-notas"></textarea>
+    </div>
+
+    <div class="linha" id="linhaContato">
+      <span id="emoji6">👆</span> Quem está entrando em contato:
+      <textarea id="Contato" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelContato"> Não aplicável
+    </div>
+
+    <!-- Linha adicionada -->
+    <div class="linhaEmail" id="linhaEmail">
+      <span id="emoji3">📧</span> E-mails fornecidos pelo cliente:
+      <textarea id="emailCliente" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelEmail"> Não aplicável
+    </div>
+
+    <!-- Linha adicionada -->
+    <div class="linhaDispositivos">
+      <span id="emoji2">💻</span> Dispositivos utilizados:
+      <textarea id="dispositivosUtilizados" class="bloco-notas"></textarea>
+    </div>
+
+    <!-- Linha adicionada -->
+    <div class="linha" id="linhaTelefone">
+      <span id="emoji3">📞</span> Telefone do Cliente:
       <textarea id="telefoneCliente" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelTelefone"> Não aplicável
+    </div>
+
+    <!-- Linha adicionada -->
+    <div class="linha" id="linhaPeriodo">
+      <span id="emoji3">🕗</span> Melhor Período:
+      <textarea id="melhorPeriodo" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelPeriodo"> Não aplicável
     </div>
 
     <div class="linha">
-      <span id="emoji3">📝</span> Etapas e resolução de problemas:
+      <span id="emoji4">📝</span> Etapas e resolução de problemas:
       <textarea id="etapasResolucao" class="bloco-notas"></textarea>
     </div>
 
@@ -78,25 +112,46 @@
       <textarea id="solucaoProximasEtapas" class="bloco-notas"></textarea>
     </div>
 
-    <div class="linha">
+    <div class="linha" id="linhaReenbolso">
+      <span id="emoji6">💰</span> Motivo de solicitação de reembolso:
+      <textarea id="reembolso" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelReembolso"> Não aplicável
+    </div>
+
+    <div class="linha" id="linhaApaziguamento">
+      <span id="emoji6">😇</span> Apaziguamento (benefício ou cortesia):
+      <textarea id="apaziguamento" class="bloco-notas"></textarea>
+      <input type="checkbox" id="naoAplicavelApaziguamento"> Não aplicável
+    </div>
+
+    <div class="linha" id="linhaTabulacao">
       <span id="emoji5">📋</span> Tabulação:
       <textarea id="tabulacao" class="bloco-notas"></textarea>
       <input type="checkbox" id="naoAplicavelTabulacao"> Não aplicável
     </div>
 
-    <div class="linha">
+    <div class="linha" id="linhaTag">
       <span id="emoji6">🏷️</span> Tag:
       <textarea id="tag" class="bloco-notas"></textarea>
       <input type="checkbox" id="naoAplicavelTag"> Não aplicável
     </div>
 
-    <div class="linha">
-      <span id="emoji7">🔎</span> Feedback do cliente:
-      <textarea id="feedbackCliente" class="bloco-notas"></textarea>
+    <!-- Linha para Documentação Anexada -->
+    <div class="linha" id="linhaDocumentacaoAnexada">
+      <span id="emojiDocumentacao">📷</span> Documentação anexada:
+      <input type="radio" id="documentacaoNao" name="documentacao" value="Não" checked>
+      <label for="documentacaoNao">Não</label>
+      <input type="radio" id="documentacaoSim" name="documentacao" value="Sim">
+      <label for="documentacaoSim">Sim</label>
     </div>
 
     <div class="linha">
-      <span id="emoji8">👀</span> Observação:
+      <span id="emoji8">🔎</span> Feedback do cliente:
+      <textarea id="feedbackCliente" class="bloco-notas"></textarea>
+    </div>
+
+    <div class="linha" id="linhaObservacao">
+      <span id="emoji7">👀</span> Observação:
       <textarea id="observacao" class="bloco-notas"></textarea>
       <input type="checkbox" id="naoAplicavelObservacao"> Não aplicável
     </div>
@@ -155,29 +210,74 @@
         }
 
         textoFinal += adicionarEmoji("⚠️") + " Motivo/Solicitação: " + document.getElementById('motivo').value + "\n\n";
-        textoFinal += adicionarEmoji("📞") + " Telefone do Cliente: " + document.getElementById('telefoneCliente').value + "\n\n";
-        textoFinal += adicionarEmoji("📝") + " Etapas e resolução de problemas: " + document.getElementById('etapasResolucao').value + "\n\n";
+        textoFinal += adicionarEmoji("🔐") + " Dados de Verificação de Conta: " + document.getElementById('dadosVerificacao').value + "\n\n";
+
+        
+        // Verifica se a quem está entrando em contato é aplicável
+        var naoAplicavelContato = document.getElementById('naoAplicavelContato').checked;
+        if (!naoAplicavelContato) {
+          textoFinal += adicionarEmoji("👆") + " Quem está entrando em contato: " + document.getElementById('Contato').value + "\n\n";
+        }
+
+        textoFinal += adicionarEmoji("💻") + " Dispositivos utilizados: " + document.getElementById('dispositivosUtilizados').value + "\n\n";
+
+        // Verifica se os emails fornecidos pelo cliente é aplicável
+        var naoAplicavelEmail = document.getElementById('naoAplicavelEmail').checked;
+        if (!naoAplicavelEmail) {
+          textoFinal += adicionarEmoji("📧") + " E-mails fornecidos pelo cliente: " + document.getElementById('emailCliente').value + "\n\n";
+        }
+
+        // Verifica se o telefone do cliente é aplicável
+        var naoAplicavelTelefone = document.getElementById('naoAplicavelTelefone').checked;
+        if (!naoAplicavelTelefone) {
+          textoFinal += adicionarEmoji("📞") + " Telefone do Cliente: " + document.getElementById('telefoneCliente').value + "\n\n";
+        }
+
+        // Verifica se o telefone do cliente é aplicável
+        var naoAplicavelPeriodo = document.getElementById('naoAplicavelPeriodo').checked;
+        if (!naoAplicavelPeriodo) {
+          textoFinal += adicionarEmoji("🕗") + " Melhor Período: " + document.getElementById('melhorPeriodo').value + "\n\n";
+        }
+
+        textoFinal += adicionarEmoji("📝") + " Etapas e resolução de problemas:" + "\n\n" + document.getElementById('etapasResolucao').value + "\n\n";
         textoFinal += adicionarEmoji("✔️") + " Solução final e/ou próximas etapas: " + document.getElementById('solucaoProximasEtapas').value + "\n\n";
 
+        // Verifica se a reembolso é aplicável
+        var naoAplicavelReembolso = document.getElementById('naoAplicavelReembolso').checked;
+        if (!naoAplicavelReembolso) {
+          textoFinal += adicionarEmoji("💰") + " Motivo de solicitação de reembolso: " + document.getElementById('reembolso').value + "\n\n";
+        }
+
+        // Verifica se a apaziguamento é aplicável
+        var naoAplicavelApaziguamento = document.getElementById('naoAplicavelApaziguamento').checked;
+        if (!naoAplicavelApaziguamento) {
+          textoFinal += adicionarEmoji("😇") + " Apaziguamento (benefício ou cortesia): " + document.getElementById('apaziguamento').value + "\n\n";
+        }
+
+        // Verifica se a tabulação é aplicável
         var naoAplicavelTabulacao = document.getElementById('naoAplicavelTabulacao').checked;
         if (!naoAplicavelTabulacao) {
           textoFinal += adicionarEmoji("📋") + " Tabulação: " + document.getElementById('tabulacao').value + "\n\n";
         }
 
+        // Verifica se a tag é aplicável
         var naoAplicavelTag = document.getElementById('naoAplicavelTag').checked;
         if (!naoAplicavelTag) {
           textoFinal += adicionarEmoji("🏷️") + " Tag: " + document.getElementById('tag').value + "\n\n";
         }
 
+        // Verifica se a documentação foi anexada
+        var documentacaoAnexada = document.querySelector('input[name="documentacao"]:checked').value;
+        textoFinal += adicionarEmoji("📷") + " Documentação anexada: " + documentacaoAnexada + "\n\n";
+
         textoFinal += adicionarEmoji("🔎") + " Feedback do cliente: " + document.getElementById('feedbackCliente').value + "\n\n";
 
-        // Oitava linha
+        // Verifica se a observação é aplicável
         var naoAplicavelObservacao = document.getElementById('naoAplicavelObservacao').checked;
         if (!naoAplicavelObservacao) {
           textoFinal += adicionarEmoji("👀") + " Observação: " + document.getElementById('observacao').value + "\n\n";
         }
 
-        // Nona linha
         var statusSelecionado = document.getElementById('status').value;
         var statusFormatado = formatarStatus(statusSelecionado);
         textoFinal += adicionarEmoji("📌") + " Status: " + statusFormatado;
@@ -199,16 +299,16 @@
       // Lógica para limpar o formulário
       document.getElementById('removerEmojis').checked = false;
       document.getElementById('motivo').value = "";
+      document.getElementById('dadosVerificacao').value = "";
       document.getElementById('telefoneCliente').value = "";
       document.getElementById('etapasResolucao').value = "";
-      document.getElementById('solucaoProximasEtapas').value = "";
       document.getElementById('tabulacao').value = "";
       document.getElementById('naoAplicavelTabulacao').checked = false;
       document.getElementById('tag').value = "";
       document.getElementById('naoAplicavelTag').checked = false;
-      document.getElementById('feedbackCliente').value = "";
       document.getElementById('observacao').value = "";
-      document.getElementById('naoAplicavelObservacao').checked = false; // Correção na oitava linha
+      document.getElementById('naoAplicavelObservacao').checked = false;
+      document.getElementById('feedbackCliente').value = "";
       // ... limpar outras caixas de texto ...
 
       // Limpa o resultado
@@ -251,7 +351,7 @@
       } else if (status === "Unresolved") {
         return "Unresolved";
       } else {
-        return ""; // Retorne vazio ou ajuste conforme necessário para outros status
+        return status; // Retorna o próprio status se não corresponder a nenhum dos acima
       }
     }
   </script>
