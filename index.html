@@ -6,17 +6,17 @@
   <title>Notas by Jesse</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
     }
 
     .titulo {
       font-weight: bold;
-      font-size: 30px;
+      font-size: 25px;
+      line-height: 0;
     }
 
-    .linha {
+    .linha, textarea, select, input {
       font-size: 14px;
-      margin-bottom: 10px;
     }
 
     /* Estilo dos blocos de notas */
@@ -47,6 +47,11 @@
       resize: both;
       overflow: auto;
     }
+
+    /* Estilo para os itens solicitados */
+    .linhaDados, .linhaEmail, .linhaDispositivos {
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -63,7 +68,7 @@
       <textarea id="motivo" class="bloco-notas"></textarea>
     </div>
 
-    <!-- Linha adicionada -->
+    <!-- Linha modificada -->
     <div class="linhaDados">
       <span id="emoji2">🔐</span> Dados de Verificação de Conta:
       <textarea id="dadosVerificacao" class="bloco-notas"></textarea>
@@ -75,27 +80,26 @@
       <input type="checkbox" id="naoAplicavelContato"> Não aplicável
     </div>
 
-    <!-- Linha adicionada -->
+    <!-- Linha modificada -->
     <div class="linhaEmail" id="linhaEmail">
       <span id="emoji4">📧</span> E-mails fornecidos pelo cliente:
       <textarea id="emailCliente" class="bloco-notas"></textarea>
       <input type="checkbox" id="naoAplicavelEmail"> Não aplicável
     </div>
 
-    <!-- Linha adicionada -->
+    <!-- Linha modificada -->
     <div class="linhaDispositivos">
       <span id="emoji5">💻</span> Dispositivos utilizados:
       <textarea id="dispositivosUtilizados" class="bloco-notas"></textarea>
     </div>
 
-    <!-- Linha adicionada -->
+    <!-- Linhas adicionadas -->
     <div class="linha" id="linhaTelefone">
       <span id="emoji6">📞</span> Telefone do Cliente:
       <textarea id="telefoneCliente" class="bloco-notas"></textarea>
       <input type="checkbox" id="naoAplicavelTelefone"> Não aplicável
     </div>
 
-    <!-- Linha adicionada -->
     <div class="linha" id="linhaPeriodo">
       <span id="emoji7">🕗</span> Melhor Período:
       <textarea id="melhorPeriodo" class="bloco-notas"></textarea>
@@ -351,7 +355,7 @@
       } else if (status === "Unresolved") {
         return "Unresolved";
       } else {
-        return status; // Retorna o próprio status se não corresponder a nenhum dos acima
+        return "Status desconhecido";
       }
     }
   </script>
