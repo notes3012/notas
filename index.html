@@ -75,7 +75,7 @@
     </div>
 
     <div class="linha" id="linhaContato">
-      <span id="emoji3">👆</span> Quem está entrando em contato:
+      <span id="emoji3">🤔</span> Quem está entrando em contato:
       <textarea id="Contato" class="bloco-notas"></textarea>
       <input type="checkbox" id="naoAplicavelContato"> Não aplicável
     </div>
@@ -142,7 +142,7 @@
 
     <!-- Linha para Documentação Anexada -->
     <div class="linha" id="linhaDocumentacaoAnexada">
-      <span id="emoji13">📷</span> Documentação anexada:
+      <span id="emoji13">🎬</span> Documentação anexada:
       <input type="radio" id="documentacaoSim" name="documentacao" value="Sim" checked>
       <label for="documentacaoSim">Sim</label>
       <input type="radio" id="documentacaoNao" name="documentacao" value="Não">
@@ -150,7 +150,7 @@
     </div>
 
     <div class="linha">
-      <span id="emoji15">🔎</span> Feedback do cliente:
+      <span id="emoji15">🗣</span> Feedback do cliente:
       <textarea id="feedbackCliente" class="bloco-notas"></textarea>
     </div>
 
@@ -220,7 +220,7 @@
         // Verifica se a quem está entrando em contato é aplicável
         var naoAplicavelContato = document.getElementById('naoAplicavelContato').checked;
         if (!naoAplicavelContato) {
-          textoFinal += adicionarEmoji("👆") + " Quem está entrando em contato: " + document.getElementById('Contato').value + "\n\n";
+          textoFinal += adicionarEmoji("🤔") + " Quem está entrando em contato: " + document.getElementById('Contato').value + "\n\n";
         }
 
         textoFinal += adicionarEmoji("💻") + " Dispositivos utilizados: " + document.getElementById('dispositivosUtilizados').value + "\n\n";
@@ -272,9 +272,9 @@
 
         // Verifica se a documentação foi anexada
         var documentacaoAnexada = document.querySelector('input[name="documentacao"]:checked').value;
-        textoFinal += adicionarEmoji("📷") + " Documentação anexada: " + documentacaoAnexada + "\n\n";
+        textoFinal += adicionarEmoji("🎬") + " Documentação anexada: " + documentacaoAnexada + "\n\n";
 
-        textoFinal += adicionarEmoji("🔎") + " Feedback do cliente: " + document.getElementById('feedbackCliente').value + "\n\n";
+        textoFinal += adicionarEmoji("🗣") + " Feedback do cliente: " + document.getElementById('feedbackCliente').value + "\n\n";
 
         // Verifica se a observação é aplicável
         var naoAplicavelObservacao = document.getElementById('naoAplicavelObservacao').checked;
