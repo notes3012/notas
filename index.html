@@ -57,6 +57,8 @@
 <body>
   <div>
     <p class="titulo">Gerador de Notas 2.0</p>
+    <!-- Subtexto -->
+    <p>Todos os campos marcados como "Não aplicável" serão excluídos no texto final gerado.</p>
     
     <!-- Checkbox para remover emojis -->
     <br>
@@ -112,7 +114,7 @@
     </div>
 
     <div class="linha">
-      <span id="emoji9">✅</span> Solução final e/ou próximas etapas:
+      <span id="emoji9">✔️</span> Solução final e/ou próximas etapas:
       <textarea id="solucaoProximasEtapas" class="bloco-notas"></textarea>
     </div>
 
@@ -143,10 +145,10 @@
     <!-- Linha para Documentação Anexada -->
     <div class="linha" id="linhaDocumentacaoAnexada">
       <span id="emoji13">🎬</span> Documentação anexada:
-      <input type="radio" id="documentacaoSim" name="documentacao" value="Sim" checked>
-      <label for="documentacaoSim">Sim</label>
-      <input type="radio" id="documentacaoNao" name="documentacao" value="Não">
-      <label for="documentacaoNao">Não</label>
+      <input type="radio" id="documentacaoNaoAplicavel" name="documentacao" value="Não aplicável" checked>
+      <label for="documentacaoNaoAplicavel">Não aplicável</label>
+      <input type="radio" id="documentacaoSim" name="documentacao" value="Sim">
+      <label for="documentacaoNao">Sim</label>
     </div>
 
     <div class="linha">
@@ -244,7 +246,7 @@
         }
 
         textoFinal += adicionarEmoji("📝") + " Etapas e resolução de problemas:" + "\n\n" + document.getElementById('etapasResolucao').value + "\n\n";
-        textoFinal += adicionarEmoji("✅") + " Solução final e/ou próximas etapas: " + document.getElementById('solucaoProximasEtapas').value + "\n\n";
+        textoFinal += adicionarEmoji("✔️") + " Solução final e/ou próximas etapas: " + document.getElementById('solucaoProximasEtapas').value + "\n\n";
 
         // Verifica se a reembolso é aplicável
         var naoAplicavelReembolso = document.getElementById('naoAplicavelReembolso').checked;
@@ -270,9 +272,11 @@
           textoFinal += adicionarEmoji("🏷️") + " Tag: " + document.getElementById('tag').value + "\n\n";
         }
 
-        // Verifica se a documentação foi anexada
-        var documentacaoAnexada = document.querySelector('input[name="documentacao"]:checked').value;
-        textoFinal += adicionarEmoji("🎬") + " Documentação anexada: " + documentacaoAnexada + "\n\n";
+// Verifica se a documentação foi anexada
+var documentacaoAnexada = document.querySelector('input[name="documentacao"]:checked').value;
+if (documentacaoAnexada !== 'Não aplicável') {
+  textoFinal += adicionarEmoji("🎬") + " Documentação anexada: " + documentacaoAnexada + "\n\n";
+}
 
         textoFinal += adicionarEmoji("🗣") + " Feedback do cliente: " + document.getElementById('feedbackCliente').value + "\n\n";
 
